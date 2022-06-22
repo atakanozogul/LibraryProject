@@ -1,0 +1,26 @@
+﻿@model EntityLayer.Entites.Reader //Model olarak reader ı kullandım.
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Add", "Reader", FormMethod.Post))
+{
+    @*Okuyu ekleme sayfası için view oluşturdum ve inputlarımı koydum*@
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-description"> Kişi Ekle </p>
+                <form class="forms-sample">
+                    <div class="form-group">
+                        <label>Kişi Adı</label>
+                        <input type="text" name="ReaderFullName" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Kaydet</button>
+                    <a asp-action="Index" asp-controller="Reader" class="btn btn-dark">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+

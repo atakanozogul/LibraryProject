@@ -1,0 +1,88 @@
+﻿@using EntityLayer.Entites
+@model List<Book>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<Reader> readers = ViewBag.Readers;
+}
+@*Kitap listeleme sayfası için view oluşturdum ve tablo yapısı kullanarak tüm kitaplarımızı listelettim*@
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Kitaplar</h4>
+            <a asp-controller="Book" asp-action="Add" class="btn btn-info">Kitap Ekle</a>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Fotoğraf</th>
+                            <th>Kitap İsmi</th>
+                            <th>Yazar</th>
+                            <th>Durum</th>
+                            <th>Alan Kişi</th>
+                            <th>Alınma Tarihi</th>
+                            <th>Verilme Tarihi</th>
+                            <th>Ödünç Ver</th>
+                            <th>Teslim Al</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><img src="@item.BookImageUrl" width="50" height="50" class="img-circle" /></td>
+                                <td>@item.BookName</td>
+                                <td>@item.BookAuthor</td>
+                                @if (item.IsOut == true)
+                                {
+                                    <td>Dışarda</td>
+                                }
+                                else
+                                {
+                                    <td>Kütüphanede</td>
+                                }
+                                @foreach (var reader in readers)
+                                {
+                                    if (reader.ReaderID == item.ReaderID)
+                                    {
+                                        <td>@reader.ReaderFullName</td>
+                                    }
+                                }
+                                @if (item.TakeDate == null)
+                                {
+                                    <td>-</td>
+                                }
+                                else
+                                {
+                                    <td>@(((DateTime)item.TakeDate).ToString("dd-MM-yyyy"))</td>
+                                }
+                                @if (item.GiveDate == null)
+                                {
+                                    <td>-</td>
+                                }
+                                else
+                                {
+                                    <td>@(((DateTime)item.GiveDate).ToString("dd-MM-yyyy"))</td>
+                                }
+                                @if (item.ReaderID == null)
+                                {
+                                    <td>-</td>
+                                    <td><a class="btn btn-success" asp-action="GiveBook" asp-controller="Book" asp-route-id="@item.BookID">Ödünç Ver</a></td>
+                                    <td><a class="btn btn-warning" style="pointer-events: none; display: inline-block;" asp-action="TakeBook" asp-controller="Book" asp-route-id="@item.BookID">Teslim Al</a></td>
+                                }
+                                else
+                                {
+                                    <td><a class="btn btn-success" style="pointer-events: none; display: inline-block;" asp-action="GiveBook" asp-controller="Book" asp-route-id="@item.BookID">Ödünç Ver</a></td>
+                                    <td><a class="btn btn-warning" asp-action="TakeBook" asp-controller="Book" asp-route-id="@item.BookID">Teslim Al</a></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

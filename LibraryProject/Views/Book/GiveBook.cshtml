@@ -1,0 +1,35 @@
+﻿@using EntityLayer.Entites
+@model Book //Model olarak book kullandım
+@{
+    ViewData["Title"] = "GiveBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("GiveBook", "Book", FormMethod.Post))
+{
+    @*Kitap verme sayfası için bir view oluşturdum ve bu sayfa için inputlarımızı ayarladım*@
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-description"> Kitap Ver </p>
+                <form class="forms-sample"> 
+                    @Html.HiddenFor(x=>x.BookID)
+                    @Html.HiddenFor(x=>x.BookAuthor)
+                    @Html.HiddenFor(x=>x.BookName)
+                    @Html.HiddenFor(x=>x.BookImageUrl)
+                    <div class="form-group">
+                        <div><label>Verilecek kitap Adı :</label> @Model.BookName</div>
+                        <div><label>Kişi Adı :</label></div>
+                        <div><select asp-for="ReaderID" class="form-control" asp-items="@(new SelectList(ViewBag.Readers,"ReaderID","ReaderFullName"))"></select></div>
+                        <label>Verilme Tarihi</label>
+                        <span asp-validation-for="GiveDate" class="text-danger"></span>
+                        <input type="date" asp-for="GiveDate" class="form-control" />
+
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Kaydet</button>
+                    <a asp-action="Index" asp-controller="Book" class="btn btn-dark">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+}

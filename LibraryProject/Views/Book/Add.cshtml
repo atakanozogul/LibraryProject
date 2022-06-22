@@ -1,0 +1,31 @@
+﻿@model BookLibrary.Models.AddBookVM //Model olarak viewModelimizi kullandım
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Add", "Book", FormMethod.Post))
+{
+    //Burada ekleme işlemi için bir view kullandım
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-description"> Haber Ekle </p>
+                <form class="forms-sample">
+                    <div class="form-group">
+                        <label>Kitap Adı</label>
+                        <input type="text" name="BookName" class="form-control"> @*Ekleme işlemi için kullanıcıya bir input gönderdim*@
+                        <label>Kitap Yazarı</label>
+                        <input type="text" name="BookAuthor" class="form-control">
+                        <label>Fotoğraf</label>
+                        <input type="text" name="BookImageUrl" class="form-control">
+                        <div class="text-danger" asp-validation-summary="ModelOnly"></div> @*Validasyonların uyarıları için bir alan açtım*@
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Kaydet</button> @*Kaydet ve iptal et buttonlarımızı koydum*@
+                    <a asp-action="Index" asp-controller="Book" class="btn btn-dark">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
